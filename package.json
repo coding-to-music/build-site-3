@@ -1,0 +1,21 @@
+{
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  },
+  "scripts": {
+    "build-site": "npm-run-all build:*",
+    "build:less": "lessc site/style.less build/style.css",
+    "build:render": "mustache labels.en.json site/index.mustache | html-minifier -o build/index.html",
+    "build:js": "cp site/fibocalc.js build",
+    "preview": "cd build && live-server --port=3333 ",
+    "watch": "npm-run-all --parallel watch:* preview",
+    "watch:less": "onchange 'site/**.less' -- npm run build:less",
+    "watch:js": "onchange 'site/**.js' -- npm run build:js",
+    "watch:html": "onchange 'labels.en.json' 'site/**.mustache' -- npm run build:render"
+},
+  "dependencies": {
+    "lessc": "^1.0.2",
+    "live-server": "^1.2.1",
+    "onchange": "^7.1.0"
+  }
+}
